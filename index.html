@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar">
-  <head>
+<html lang="ar" dir="rtl">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MK Trade Hub</title>
+    <title>MK Trade Hub | الريادة في التجارة الدولية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,50 +12,412 @@
       tailwind.config = {
         theme: {
           extend: {
-            fontFamily: {
-              cairo: ['Cairo', 'sans-serif'],
-            },
+            fontFamily: { cairo: ['Cairo', 'sans-serif'] },
             colors: {
-              primary: {
-                DEFAULT: '#0e7490', // cyan-700
-                light: '#06b6d4',   // cyan-500
-                dark: '#164e63',    // cyan-900
-              },
-              secondary: {
-                DEFAULT: '#1e293b', // slate-800
-                hover: '#334155',   // slate-700
-              }
-            },
-            animation: {
-              'fade-in-up': 'fadeInUp 1s ease-out forwards',
-            },
-            keyframes: {
-              fadeInUp: {
-                '0%': { opacity: '0', transform: 'translateY(20px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              }
+              navy: { DEFAULT: '#002B5B', dark: '#001C3D', light: '#1A5F7A' },
+              gold: { DEFAULT: '#C6A664', dark: '#A68A4F', light: '#D4AF37' },
+              slate: { 50: '#F8FAFC', 100: '#F1F5F9', 800: '#1E293B', 900: '#0F172A' }
             }
           },
         },
       }
     </script>
     <style>
-      body {
-        font-family: 'Cairo', sans-serif;
-      }
+      body { font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
+      
+      .nav-fixed { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+      .nav-scrolled { background-color: #ffffff !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-bottom: 2px solid #C6A664; }
+      .nav-scrolled .nav-link { color: #0F172A !important; }
+      .nav-scrolled .logo-text { color: #002B5B !important; }
+      .nav-scrolled .lang-btn { background-color: #002B5B !important; color: #ffffff !important; }
+
+      .hero-overlay { background: linear-gradient(135deg, rgba(0, 43, 91, 0.95) 0%, rgba(0, 43, 91, 0.7) 100%); }
+      .card-hover { transition: all 0.3s ease; }
+      .card-hover:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); border-color: #C6A664; }
+      
+      .section-divider { width: 80px; height: 4px; background: #C6A664; margin: 24px auto; border-radius: 2px; }
     </style>
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
-    "react/": "https://aistudiocdn.com/react@^19.2.1/",
-    "react": "https://aistudiocdn.com/react@^19.2.1"
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "lucide-react": "https://esm.sh/lucide-react@0.263.1",
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
 </head>
-  <body class="bg-slate-100 text-slate-800">
+<body class="bg-slate-50 text-slate-800">
     <div id="root"></div>
-  </body>
+
+    <script type="module">
+        import React, { useState, useEffect, createContext, useContext } from 'react';
+        import ReactDOM from 'react-dom';
+        import { 
+            Ship, Globe, PackageCheck, Headphones, Truck, FileCheck, 
+            Menu, X, Container, CheckCircle2, ShieldCheck, TrendingUp,
+            MapPin, Phone, Mail, Clock, MessageCircle, ChevronLeft, 
+            Facebook, Linkedin, Twitter, Instagram, Languages, Award, Target
+        } from 'lucide-react';
+
+        const translations = {
+            ar: {
+                companyName: "MK Trade Hub",
+                nav: { home: 'الرئيسية', about: 'من نحن', services: 'خدماتنا', contact: 'اتصل بنا' },
+                lang: 'English',
+                hero: { 
+                    badge: 'شريكك الاستراتيجي في التجارة العالمية', 
+                    title: 'MK Trade Hub', 
+                    tagline: 'نحول الفرص إلى نجاحات تجارية مستدامة', 
+                    description: 'نحن شركة رائدة متخصصة في حلول الاستيراد والتصدير، نرتكز على قيم الاحترافية والسرعة لاستغلال كل فرصة تخدم نمو أعمال عملائنا عالمياً',
+                    contactBtn: 'تواصل مع فريقنا', 
+                    servicesBtn: 'استكشف حلولنا' 
+                },
+                whyUs: {
+                    title: 'لماذا نحن',
+                    heading: 'احترافية تتخطى التوقعات',
+                    items: [
+                        { title: 'استغلال الفرص', desc: 'نمتلك رؤية ثاقبة لتحليل الأسواق واقتناص أفضل الفرص التجارية لعملائنا' },
+                        { title: 'كفاءة تشغيلية', desc: 'إدارة متكاملة لسلاسل التوريد تضمن تقليل التكاليف وزيادة السرعة' },
+                        { title: 'نزاهة وشفافية', desc: 'نؤمن بأن الصدق هو أساس النجاح، لذا نتبع أعلى معايير الشفافية في كل معاملة' }
+                    ]
+                },
+                about: { 
+                    title: 'من نحن', 
+                    heading: 'نحن لا نكتفي بالخدمة بل نسعى للريادة', 
+                    description1: 'منذ انطلاقنا في عام 2016، وضعت MK Trade Hub نصب عينيها هدفاً واحداً: أن تكون الخيار الأول للشركات الباحثة عن الاحترافية في التجارة الدولية. نحن فريق من الخبراء الذين يكرسون جهودهم لدعمك في كل خطوة', 
+                    points: ['خبرة واسعة في الأسواق العربية والدولية', 'تغطية لوجستية شاملة في مصر والإمارات', 'حلول مخصصة للشركات الصغيرة والكبرى', 'التزام صارم بمعايير الجودة العالمية'], 
+                    imageBadge: { value: '9+', label: 'سنوات من التميز' } 
+                },
+                services: { 
+                    title: 'خدماتنا', 
+                    heading: 'منظومة لوجستية متكاملة', 
+                    items: [
+                        { id: 1, title: 'الاستيراد والتصدير', description: 'إدارة كاملة لعمليات التبادل التجاري مع كبرى المصانع والشركات العالمية', icon: 'Ship' },
+                        { id: 2, title: 'الشحن الدولي', description: 'حلول شحن بحري وجوي متميزة تضمن وصول بضائعك بأمان تام', icon: 'Globe' },
+                        { id: 3, title: 'التخليص الجمركي', description: 'إنهاء كافة الإجراءات الجمركية المعقدة بسرعة فائقة لتجنب الغرامات', icon: 'FileCheck' },
+                        { id: 4, title: 'التخزين الذكي', description: 'مستودعات مجهزة بأعلى التقنيات للحفاظ على سلامة بضائعك وإدارتها', icon: 'PackageCheck' },
+                        { id: 5, title: 'النقل البري', description: 'أسطول حديث يربط المدن والموانئ بكفاءة ومرونة عالية', icon: 'Truck' },
+                        { id: 6, title: 'الاستشارات التجارية', description: 'نقدم لك خارطة طريق لفتح أسواق جديدة وزيادة مبيعاتك دولياً', icon: 'Headphones' }
+                    ] 
+                },
+                contact: { 
+                    title: 'اتصل بنا', 
+                    heading: 'تواصل معنا الآن لبدء رحلة نجاحك', 
+                    info: { 
+                        address: 'الاسكندريه شارع النصر برج النصر الاداري', 
+                        phoneEgypt: '+20 100 045 0590', 
+                        phoneUAE: '+971 55 702 6908', 
+                        email: 'info@mktradehub.com' 
+                    }
+                },
+                footer: {
+                    description: 'MK Trade Hub هي بوابتك نحو احترافية التجارة الدولية. نحن هنا لنخدمك وننمو معك.',
+                    links: {
+                        q1: 'روابط سريعة',
+                        q2: 'الخدمات اللوجستية',
+                        q3: 'المكاتب'
+                    }
+                }
+            },
+            en: {
+                companyName: "MK Trade Hub",
+                nav: { home: 'Home', about: 'About', services: 'Services', contact: 'Contact' },
+                lang: 'عربي',
+                hero: { 
+                    badge: 'Your Strategic Partner in Global Trade', 
+                    title: 'MK Trade Hub', 
+                    tagline: 'Turning Opportunities into Sustainable Success', 
+                    description: 'We are a leading firm specialized in import and export solutions, built on professionalism and speed to seize every opportunity that serves our clients growth globally.',
+                    contactBtn: 'Contact Our Team', 
+                    servicesBtn: 'Discover Solutions' 
+                },
+                whyUs: {
+                    title: 'Why Us',
+                    heading: 'Professionalism Beyond Expectations',
+                    items: [
+                        { title: 'Opportunity Seizing', desc: 'We have a keen vision to analyze markets and capture the best trade opportunities for our clients.' },
+                        { title: 'Operational Efficiency', desc: 'Integrated supply chain management ensures reduced costs and increased speed.' },
+                        { title: 'Integrity', desc: 'We believe honesty is the foundation of success, following the highest transparency standards.' }
+                    ]
+                },
+                about: { 
+                    title: 'About Us', 
+                    heading: 'We Don’t Just Serve, We Lead', 
+                    description1: 'Since our launch in 2016, MK Trade Hub set one goal: to be the first choice for companies seeking professionalism in international trade. Our experts support you at every step.', 
+                    points: ['Extensive experience in Arab and international markets', 'Comprehensive logistics coverage in Egypt and UAE', 'Customized solutions for SMEs and Corporates', 'Strict commitment to global quality standards'], 
+                    imageBadge: { value: '9+', label: 'Years of Excellence' } 
+                },
+                services: { 
+                    title: 'Our Services', 
+                    heading: 'Integrated Logistics System', 
+                    items: [
+                        { id: 1, title: 'Import & Export', description: 'Full management of trade exchanges with major global factories.', icon: 'Ship' },
+                        { id: 2, title: 'International Shipping', description: 'Premium sea and air freight solutions for safe delivery.', icon: 'Globe' },
+                        { id: 3, title: 'Customs Clearance', description: 'Fast processing of complex customs procedures to avoid delays.', icon: 'FileCheck' },
+                        { id: 4, title: 'Smart Warehousing', description: 'Warehouses equipped with high tech to manage your goods safely.', icon: 'PackageCheck' },
+                        { id: 5, title: 'Land Transport', description: 'Modern fleet connecting cities and ports with high efficiency.', icon: 'Truck' },
+                        { id: 6, title: 'Trade Consultancy', description: 'Roadmaps to open new markets and increase international sales.', icon: 'Headphones' }
+                    ] 
+                },
+                contact: { 
+                    title: 'Contact Us', 
+                    heading: 'Connect with Us to Start Your Success Journey', 
+                    info: { 
+                        address: 'Alexandria, El Nasr St, Administrative Tower', 
+                        phoneEgypt: '+20 100 045 0590', 
+                        phoneUAE: '+971 55 702 6908', 
+                        email: 'info@mktradehub.com' 
+                    }
+                },
+                footer: {
+                    description: 'MK Trade Hub is your gateway to international trade professionalism. We are here to serve and grow with you.',
+                    links: {
+                        q1: 'Quick Links',
+                        q2: 'Logistics Services',
+                        q3: 'Offices'
+                    }
+                }
+            }
+        };
+
+        const LanguageContext = createContext();
+        const LanguageProvider = ({ children }) => {
+            const [language, setLanguage] = useState('ar');
+            useEffect(() => {
+                document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+                document.documentElement.lang = language;
+            }, [language]);
+            const value = { language, setLanguage, t: translations[language], isAr: language === 'ar' };
+            return React.createElement(LanguageContext.Provider, { value }, children);
+        };
+        const useLanguage = () => useContext(LanguageContext);
+
+        const Icon = ({ name, ...props }) => {
+            const icons = { Ship, Globe, FileCheck, PackageCheck, Truck, Headphones, Award, Target, MapPin, Phone, Mail, Clock, MessageCircle, ChevronLeft, Facebook, Linkedin, Twitter, Instagram };
+            return React.createElement(icons[name] || Globe, props);
+        };
+
+        const Navbar = ({ onNavigate }) => {
+            const { t, setLanguage, language, isAr } = useLanguage();
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [isOpen, setIsOpen] = useState(false);
+
+            useEffect(() => {
+                const handle = () => setIsScrolled(window.scrollY > 40);
+                window.addEventListener('scroll', handle);
+                return () => window.removeEventListener('scroll', handle);
+            }, []);
+
+            return React.createElement('nav', { className: `fixed w-full z-50 nav-fixed ${isScrolled ? 'nav-scrolled py-3' : 'bg-transparent py-6'}` },
+                React.createElement('div', { className: 'max-w-7xl mx-auto px-6 flex justify-between items-center' },
+                    React.createElement('div', { onClick: () => onNavigate('home'), className: 'flex items-center gap-3 cursor-pointer' },
+                        React.createElement(Container, { className: isScrolled ? 'text-navy' : 'text-gold' }),
+                        React.createElement('span', { className: `font-black text-2xl logo-text transition-colors ${isScrolled ? 'text-navy' : 'text-white'}` }, t.companyName)
+                    ),
+                    React.createElement('div', { className: 'hidden md:flex gap-10 items-center font-bold' },
+                        ['home', 'about', 'services', 'contact'].map(id => React.createElement('button', { 
+                            key: id, 
+                            onClick: () => onNavigate(id),
+                            className: `nav-link transition-colors text-sm uppercase tracking-widest ${isScrolled ? 'text-slate-800' : 'text-white'}`
+                        }, t.nav[id])),
+                        React.createElement('button', { 
+                            onClick: () => setLanguage(isAr ? 'en' : 'ar'),
+                            className: `lang-btn flex items-center gap-2 px-5 py-2 rounded-full font-black text-sm transition-all shadow-md ${isScrolled ? 'bg-navy text-white' : 'bg-gold text-navy'}`
+                        }, React.createElement(Languages, { size: 16 }), t.lang)
+                    ),
+                    React.createElement('button', { className: `md:hidden ${isScrolled ? 'text-navy' : 'text-white'}`, onClick: () => setIsOpen(!isOpen) }, isOpen ? React.createElement(X) : React.createElement(Menu))
+                ),
+                isOpen && React.createElement('div', { className: 'md:hidden bg-white shadow-2xl p-8 absolute w-full top-full flex flex-col gap-6 animate-fade-in-up' },
+                    ['home', 'about', 'services', 'contact'].map(id => React.createElement('button', { key: id, onClick: () => { onNavigate(id); setIsOpen(false); }, className: 'text-right font-black text-lg text-navy border-b pb-2' }, t.nav[id])),
+                    React.createElement('button', { onClick: () => { setLanguage(isAr ? 'en' : 'ar'); setIsOpen(false); }, className: 'bg-gold text-navy py-3 rounded-lg font-black' }, t.lang)
+                )
+            );
+        };
+
+        const Home = ({ onNavigate }) => {
+            const { t } = useLanguage();
+            return React.createElement('div', null,
+                React.createElement('section', { className: 'relative h-screen flex items-center justify-center bg-navy-dark overflow-hidden' },
+                    React.createElement('img', { src: 'https://images.unsplash.com/photo-1494412574643-35d324688133?q=80&w=2067', className: 'absolute inset-0 w-full h-full object-cover opacity-40' }),
+                    React.createElement('div', { className: 'absolute inset-0 hero-overlay' }),
+                    React.createElement('div', { className: 'relative z-10 text-center px-6 max-w-5xl' },
+                        React.createElement('span', { className: 'bg-gold text-navy px-6 py-2 rounded-full text-xs font-black mb-10 inline-block tracking-[0.3em] shadow-2xl' }, t.hero.badge),
+                        React.createElement('h1', { className: 'text-5xl md:text-8xl font-black text-white mb-8 leading-tight' }, t.hero.title),
+                        React.createElement('p', { className: 'text-xl md:text-2xl text-slate-100 mb-12 font-light leading-relaxed max-w-3xl mx-auto' }, t.hero.description),
+                        React.createElement('div', { className: 'flex justify-center gap-6 flex-wrap' },
+                            React.createElement('button', { onClick: () => onNavigate('contact'), className: 'bg-gold text-navy px-12 py-5 rounded-2xl font-black text-xl shadow-xl hover:bg-white transition-all' }, t.hero.contactBtn),
+                            React.createElement('button', { onClick: () => onNavigate('services'), className: 'border-2 border-white/40 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-white/10 transition-all' }, t.hero.servicesBtn)
+                        )
+                    )
+                ),
+                React.createElement('section', { className: 'py-24 px-6 bg-white relative z-20' },
+                    React.createElement('div', { className: 'max-w-7xl mx-auto' },
+                        React.createElement('div', { className: 'text-center mb-16' },
+                            React.createElement('h2', { className: 'text-gold font-black uppercase tracking-widest text-sm mb-4' }, t.whyUs.title),
+                            React.createElement('h3', { className: 'text-4xl font-black text-navy' }, t.whyUs.heading),
+                            React.createElement('div', { className: 'section-divider' })
+                        ),
+                        React.createElement('div', { className: 'grid md:grid-cols-3 gap-12' },
+                            t.whyUs.items.map((item, i) => React.createElement('div', { key: i, className: 'text-center p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-gold transition-colors group' },
+                                React.createElement('div', { className: 'w-16 h-16 bg-navy text-gold rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform' }, i === 0 ? React.createElement(Target) : i === 1 ? React.createElement(TrendingUp) : React.createElement(ShieldCheck)),
+                                React.createElement('h4', { className: 'text-xl font-black mb-4 text-navy' }, item.title),
+                                React.createElement('p', { className: 'text-slate-500 font-bold leading-relaxed' }, item.desc)
+                            ))
+                        )
+                    )
+                ),
+                React.createElement('section', { className: 'py-24 px-6 max-w-7xl mx-auto' },
+                    React.createElement('div', { className: 'text-center mb-20' },
+                        React.createElement('h2', { className: 'text-gold font-black tracking-[0.3em] uppercase mb-4 text-sm' }, t.services.title),
+                        React.createElement('h3', { className: 'text-5xl font-black text-navy mb-4' }, t.services.heading),
+                        React.createElement('div', { className: 'section-divider' })
+                    ),
+                    React.createElement('div', { className: 'grid grid-cols-1 md:grid-cols-3 gap-10' },
+                        t.services.items.map(s => React.createElement('div', { key: s.id, className: 'bg-white p-12 rounded-[2.5rem] border border-slate-100 card-hover text-right group' },
+                            React.createElement('div', { className: 'w-20 h-20 bg-navy text-gold rounded-3xl flex items-center justify-center mb-10 group-hover:bg-gold group-hover:text-navy transition-all duration-500' }, React.createElement(Icon, { name: s.icon, size: 36 })),
+                            React.createElement('h4', { className: 'text-2xl font-black mb-6 text-navy' }, s.title),
+                            React.createElement('p', { className: 'text-slate-500 text-lg leading-relaxed font-bold' }, s.description)
+                        ))
+                    )
+                )
+            );
+        };
+
+        const About = () => {
+            const { t } = useLanguage();
+            return React.createElement('section', { className: 'py-32 px-6 bg-slate-50 overflow-hidden animate-fade-in-up' },
+                React.createElement('div', { className: 'max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center' },
+                    React.createElement('div', null,
+                        React.createElement('h2', { className: 'text-gold font-black mb-4 tracking-widest text-sm uppercase' }, t.about.title),
+                        React.createElement('h3', { className: 'text-5xl font-black mb-10 leading-tight text-navy' }, t.about.heading),
+                        React.createElement('p', { className: 'text-xl text-slate-600 mb-12 leading-relaxed font-bold' }, t.about.description1),
+                        React.createElement('div', { className: 'grid grid-cols-1 gap-6' },
+                            t.about.points.map((p, i) => React.createElement('div', { key: i, className: 'flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border-l-4 border-gold' }, 
+                                React.createElement(CheckCircle2, { className: 'text-gold', size: 24 }),
+                                React.createElement('span', { className: 'font-black text-slate-700 text-lg' }, p)
+                            ))
+                        )
+                    ),
+                    React.createElement('div', { className: 'relative' },
+                        React.createElement('div', { className: 'rounded-[4rem] overflow-hidden shadow-2xl' },
+                            React.createElement('img', { src: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070', className: 'w-full object-cover' })
+                        ),
+                        React.createElement('div', { className: 'absolute -bottom-10 -right-10 bg-navy p-12 text-white rounded-[3rem] shadow-2xl border-t-8 border-gold' },
+                            React.createElement('p', { className: 'text-6xl font-black mb-2 text-gold' }, t.about.imageBadge.value),
+                            React.createElement('p', { className: 'text-xs font-black tracking-widest opacity-70 uppercase' }, t.about.imageBadge.label)
+                        )
+                    )
+                )
+            );
+        };
+
+        const Contact = () => {
+            const { t } = useLanguage();
+            return React.createElement('section', { className: 'py-32 px-6 max-w-7xl mx-auto animate-fade-in-up' },
+                React.createElement('div', { className: 'grid lg:grid-cols-3 gap-20' },
+                    React.createElement('div', { className: 'lg:col-span-1' },
+                        React.createElement('h2', { className: 'text-gold font-black mb-4 text-sm tracking-widest uppercase' }, t.contact.title),
+                        React.createElement('h3', { className: 'text-5xl font-black mb-12 text-navy' }, t.contact.heading),
+                        React.createElement('div', { className: 'space-y-12' },
+                            React.createElement('div', { className: 'flex gap-6' }, 
+                                React.createElement('div', { className: 'w-16 h-16 bg-navy text-gold rounded-2xl flex items-center justify-center shadow-xl' }, React.createElement(MapPin)),
+                                React.createElement('div', null, React.createElement('p', { className: 'font-black text-navy text-xl mb-1' }, 'المقر'), React.createElement('p', { className: 'text-slate-500 font-bold' }, t.contact.info.address))
+                            ),
+                            React.createElement('div', { className: 'flex gap-6' }, 
+                                React.createElement('div', { className: 'w-16 h-16 bg-navy text-gold rounded-2xl flex items-center justify-center shadow-xl' }, React.createElement(Phone)),
+                                React.createElement('div', null, 
+                                    React.createElement('p', { className: 'font-black text-navy text-xl mb-2' }, 'التواصل'), 
+                                    React.createElement('p', { className: 'text-slate-700 font-black text-lg', dir: 'ltr' }, t.contact.info.phoneUAE),
+                                    React.createElement('p', { className: 'text-slate-500 font-bold text-sm', dir: 'ltr' }, t.contact.info.phoneEgypt)
+                                )
+                            ),
+                            React.createElement('div', { className: 'flex gap-6' }, 
+                                React.createElement('div', { className: 'w-16 h-16 bg-navy text-gold rounded-2xl flex items-center justify-center shadow-xl' }, React.createElement(Mail)),
+                                React.createElement('div', null, React.createElement('p', { className: 'font-black text-navy text-xl mb-1' }, 'البريد'), React.createElement('p', { className: 'text-slate-500 font-bold' }, t.contact.info.email))
+                            )
+                        )
+                    ),
+                    React.createElement('form', { className: 'lg:col-span-2 bg-white p-16 rounded-[4rem] shadow-2xl border border-slate-50 space-y-8' },
+                        React.createElement('div', { className: 'grid md:grid-cols-2 gap-8' },
+                            React.createElement('input', { placeholder: 'الاسم بالكامل', className: 'w-full p-5 bg-slate-50 border-2 border-transparent focus:border-gold rounded-2xl outline-none transition font-bold text-navy' }),
+                            React.createElement('input', { placeholder: 'رقم الهاتف', className: 'w-full p-5 bg-slate-50 border-2 border-transparent focus:border-gold rounded-2xl outline-none transition font-bold text-navy' })
+                        ),
+                        React.createElement('input', { placeholder: 'البريد الإلكتروني', className: 'w-full p-5 bg-slate-50 border-2 border-transparent focus:border-gold rounded-2xl outline-none transition font-bold text-navy' }),
+                        React.createElement('textarea', { rows: 5, placeholder: 'كيف يمكننا مساعدتك؟', className: 'w-full p-5 bg-slate-50 border-2 border-transparent focus:border-gold rounded-2xl outline-none transition font-bold text-navy' }),
+                        React.createElement('button', { type: 'button', className: 'bg-navy text-white px-16 py-6 rounded-2xl font-black text-xl shadow-2xl hover:bg-navy-light transition-all w-full md:w-auto border-b-4 border-gold' }, 'إرسال الرسالة')
+                    )
+                )
+            );
+        };
+
+        const App = () => {
+            const [page, setPage] = useState('home');
+            const { t } = useLanguage();
+            useEffect(() => window.scrollTo(0,0), [page]);
+
+            const render = () => {
+                switch(page) {
+                    case 'home': return React.createElement(Home, { onNavigate: setPage });
+                    case 'about': return React.createElement(About);
+                    case 'services': return React.createElement('div', null, React.createElement(Home, { onNavigate: setPage }));
+                    case 'contact': return React.createElement(Contact);
+                    default: return React.createElement(Home, { onNavigate: setPage });
+                }
+            };
+
+            return React.createElement('div', { className: 'min-h-screen flex flex-col' },
+                React.createElement(Navbar, { onNavigate: setPage }),
+                React.createElement('main', { className: 'flex-grow' }, render()),
+                React.createElement('footer', { className: 'bg-slate-900 text-slate-400 py-24 border-t-8 border-navy' },
+                    React.createElement('div', { className: 'max-w-7xl mx-auto px-6' },
+                        React.createElement('div', { className: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20' },
+                            React.createElement('div', null,
+                                React.createElement('div', { className: 'flex items-center gap-2 mb-8' },
+                                    React.createElement(Container, { className: 'text-gold' }),
+                                    React.createElement('h4', { className: 'text-white font-black text-2xl' }, t.companyName)
+                                ),
+                                React.createElement('p', { className: 'leading-relaxed font-bold' }, t.footer.description),
+                                React.createElement('div', { className: 'flex gap-4 mt-8' },
+                                    [Facebook, Linkedin, Twitter, Instagram].map((Ico, i) => React.createElement('div', { key: i, className: 'w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-gold hover:text-navy cursor-pointer transition text-white' }, React.createElement(Ico, { size: 18 })))
+                                )
+                            ),
+                            React.createElement('div', null,
+                                React.createElement('h5', { className: 'text-white font-black mb-8 border-b border-gold/30 pb-4 inline-block uppercase tracking-widest' }, t.footer.links.q1),
+                                React.createElement('ul', { className: 'space-y-4 font-bold' },
+                                    ['الرئيسية', 'من نحن', 'خدماتنا', 'اتصل بنا'].map((l, i) => React.createElement('li', { key: i, className: 'hover:text-gold cursor-pointer transition flex items-center gap-2' }, React.createElement(ChevronLeft, { size: 14 }), l))
+                                )
+                            ),
+                            React.createElement('div', null,
+                                React.createElement('h5', { className: 'text-white font-black mb-8 border-b border-gold/30 pb-4 inline-block uppercase tracking-widest' }, t.footer.links.q2),
+                                React.createElement('ul', { className: 'space-y-4 font-bold' },
+                                    ['شحن بحري', 'تخليص جمركي', 'تخزين لوجستي', 'نقل بري دولي'].map((l, i) => React.createElement('li', { key: i, className: 'hover:text-gold cursor-pointer transition flex items-center gap-2' }, React.createElement(ChevronLeft, { size: 14 }), l))
+                                )
+                            ),
+                            React.createElement('div', null,
+                                React.createElement('h5', { className: 'text-white font-black mb-8 border-b border-gold/30 pb-4 inline-block uppercase tracking-widest' }, t.footer.links.q3),
+                                React.createElement('div', { className: 'space-y-6 font-bold' },
+                                    React.createElement('div', null, React.createElement('p', { className: 'text-gold text-xs uppercase mb-1' }, 'دبي - الإمارات'), React.createElement('p', { className: 'text-white font-black', dir: 'ltr' }, t.contact.info.phoneUAE)),
+                                    React.createElement('div', null, React.createElement('p', { className: 'text-gold text-xs uppercase mb-1' }, 'الاسكندرية - مصر'), React.createElement('p', { className: 'text-white font-black', dir: 'ltr' }, t.contact.info.phoneEgypt))
+                                )
+                            )
+                        ),
+                        React.createElement('div', { className: 'pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6' },
+                            React.createElement('p', { className: 'text-sm font-bold' }, `© ${new Date().getFullYear()} ${t.companyName}. جميع الحقوق محفوظة`),
+                            React.createElement('div', { className: 'flex gap-8 text-sm font-bold' },
+                                React.createElement('span', { className: 'hover:text-gold cursor-pointer' }, 'Privacy Policy'),
+                                React.createElement('span', { className: 'hover:text-gold cursor-pointer' }, 'Terms of Service')
+                            )
+                        )
+                    )
+                ),
+                React.createElement('a', { href: 'https://wa.me/971557026908', target: '_blank', className: 'fixed bottom-8 left-8 bg-[#25D366] text-white p-5 rounded-full shadow-2xl z-50 hover:scale-110 transition animate-bounce' }, React.createElement(MessageCircle, { size: 36 }))
+            );
+        };
+
+        const Root = () => React.createElement(LanguageProvider, null, React.createElement(App));
+        ReactDOM.render(React.createElement(Root), document.getElementById('root'));
+    </script>
+</body>
 </html>
