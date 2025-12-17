@@ -1,3 +1,2 @@
-// This file is empty because all application logic was consolidated into index.html
-// as requested for a single-file hosting solution.
+// Logic consolidated in index.html for zero-build GitHub Pages compatibility.
 export {};
