@@ -38,16 +38,19 @@ const About: React.FC = () => {
           <div className="relative">
             <div className="rounded-[3.5rem] overflow-hidden shadow-2xl border border-slate-100 transform rotate-1 hover:rotate-0 transition-transform duration-1000">
               <img 
-                src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070" 
-                alt="Logistics team" 
+                src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070" 
+                alt="Logistics management" 
                 className="w-full aspect-square object-cover"
               />
             </div>
             
-            <div className={`absolute -bottom-10 ${isRtl ? '-left-10' : '-right-10'} bg-white p-10 text-navy rounded-[3rem] shadow-2xl border border-slate-50 z-10 flex flex-col items-center min-w-[180px]`}>
-              <p className="text-5xl font-black mb-1 text-gold">{t.about.imageBadge.value}</p>
-              <p className="text-[10px] font-black tracking-widest text-slate-400 uppercase text-center">{t.about.imageBadge.label}</p>
-            </div>
+            {/* Image Badge - Removed as requested (100% Credibility) */}
+            {t.about.imageBadge.value && (
+              <div className={`absolute -bottom-10 ${isRtl ? '-left-10' : '-right-10'} bg-white p-10 text-navy rounded-[3rem] shadow-2xl border border-slate-50 z-10 flex flex-col items-center min-w-[180px]`}>
+                <p className="text-5xl font-black mb-1 text-gold">{t.about.imageBadge.value}</p>
+                <p className="text-[10px] font-black tracking-widest text-slate-400 uppercase text-center">{t.about.imageBadge.label}</p>
+              </div>
+            )}
           </div>
 
         </div>

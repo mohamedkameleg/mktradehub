@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Facebook, Linkedin, Twitter, Instagram, Send, Check, Loader2 } from 'lucide-react';
+import { Container, Facebook, Linkedin, Twitter, Instagram, Send, Check, Loader2, Phone } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer: React.FC = () => {
@@ -13,11 +13,9 @@ const Footer: React.FC = () => {
     if (!email) return;
 
     setStatus('loading');
-    // Simulate API call
     setTimeout(() => {
       setStatus('success');
       setEmail('');
-      // Reset after 3 seconds
       setTimeout(() => setStatus('idle'), 3000);
     }, 1500);
   };
@@ -40,12 +38,12 @@ const Footer: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={status === 'loading' || status === 'success'}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 md:py-4 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all pr-32 rtl:pr-4 rtl:pl-32"
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 md:py-4 focus:ring-2 focus:ring-gold focus:border-gold outline-none transition-all pr-32 rtl:pr-4 rtl:pl-32"
               />
               <button 
                 type="submit" 
                 disabled={status === 'loading' || status === 'success'}
-                className={`absolute top-1 bottom-1 ${isRtl ? 'left-1' : 'right-1'} bg-primary text-white font-bold rounded-md px-6 hover:bg-primary-dark transition-all flex items-center justify-center gap-2 min-w-[120px] disabled:opacity-80 disabled:cursor-not-allowed`}
+                className={`absolute top-1 bottom-1 ${isRtl ? 'left-1' : 'right-1'} bg-gold text-navy font-bold rounded-md px-6 hover:bg-gold-dark transition-all flex items-center justify-center gap-2 min-w-[120px] disabled:opacity-80 disabled:cursor-not-allowed`}
               >
                 {status === 'loading' ? (
                   <>
@@ -73,23 +71,23 @@ const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-white mb-4">
-              <Container className="h-8 w-8 text-primary" />
+              <Container className="h-8 w-8 text-gold" />
               <span className="font-bold text-2xl">{t.companyName}</span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed">
               {t.footer.description}
             </p>
             <div className={`flex space-x-4 pt-2 ${isRtl ? 'space-x-reverse' : ''}`}>
-              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-primary hover:text-white transition-colors">
+              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-gold hover:text-navy transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-primary hover:text-white transition-colors">
+              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-gold hover:text-navy transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-primary hover:text-white transition-colors">
+              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-gold hover:text-navy transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-primary hover:text-white transition-colors">
+              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-gold hover:text-navy transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
             </div>
@@ -99,11 +97,11 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-white font-bold text-lg mb-6">{t.footer.quickLinks}</h4>
             <ul className="space-y-3">
-              <li><a href="#home" className="hover:text-primary transition-colors text-sm">{t.nav.home}</a></li>
-              <li><a href="#about" className="hover:text-primary transition-colors text-sm">{t.nav.about}</a></li>
-              <li><a href="#services" className="hover:text-primary transition-colors text-sm">{t.nav.services}</a></li>
-              <li><a href="#stats" className="hover:text-primary transition-colors text-sm">{t.nav.stats}</a></li>
-              <li><a href="#contact" className="hover:text-primary transition-colors text-sm">{t.nav.contact}</a></li>
+              <li><a href="#home" className="hover:text-gold transition-colors text-sm">{t.nav.home}</a></li>
+              <li><a href="#about" className="hover:text-gold transition-colors text-sm">{t.nav.about}</a></li>
+              <li><a href="#services" className="hover:text-gold transition-colors text-sm">{t.nav.services}</a></li>
+              <li><a href="#stats" className="hover:text-gold transition-colors text-sm">{t.nav.stats}</a></li>
+              <li><a href="#contact" className="hover:text-gold transition-colors text-sm">{t.nav.contact}</a></li>
             </ul>
           </div>
 
@@ -112,26 +110,32 @@ const Footer: React.FC = () => {
             <h4 className="text-white font-bold text-lg mb-6">{t.footer.servicesTitle}</h4>
             <ul className="space-y-3">
               {t.footer.serviceLinks.map((serviceName, index) => (
-                <li key={index}><a href="#" className="hover:text-primary transition-colors text-sm">{serviceName}</a></li>
+                <li key={index}><a href="#" className="hover:text-gold transition-colors text-sm">{serviceName}</a></li>
               ))}
             </ul>
           </div>
 
-          {/* Contact Summary */}
+          {/* Contact Summary - Updated to show both phones clearly */}
           <div>
             <h4 className="text-white font-bold text-lg mb-6">{t.footer.contact}</h4>
             <ul className="space-y-4 text-sm">
-              <li className="flex items-start gap-3">
-                <span className="text-primary font-bold">{t.contact.info.address.label}:</span>
-                <span>{t.contact.info.address.value}</span>
+              <li className="flex flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-gold font-bold">{t.contact.info.phone.label}:</span>
+                  <span dir="ltr">{t.contact.info.phone.value}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-gold font-bold">{t.contact.info.phoneUAE.label}:</span>
+                  <span dir="ltr">{t.contact.info.phoneUAE.value}</span>
+                </div>
               </li>
-              <li className="flex items-start gap-3">
-                <span className="text-primary font-bold">{t.contact.info.phone.label}:</span>
-                <span dir="ltr">{t.contact.info.phone.value}</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-primary font-bold">{t.contact.info.email.label}:</span>
+              <li className="flex items-start gap-3 border-t border-slate-800 pt-3">
+                <span className="text-gold font-bold">{t.contact.info.email.label}:</span>
                 <span className="break-all">{t.contact.info.email.value}</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-gold font-bold">{t.contact.info.address.label}:</span>
+                <span>{t.contact.info.address.value}</span>
               </li>
             </ul>
           </div>

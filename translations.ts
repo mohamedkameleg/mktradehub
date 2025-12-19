@@ -11,7 +11,7 @@ export const translations = {
       contact: 'تواصل معنا'
     },
     hero: {
-      badge: 'التميز في التجارة الدولية',
+      badge: '', // تم إزالتها بناءً على طلب المستخدم
       title: 'MK Trade Hub',
       tagline: 'نبتكر الحلول لتجارة عالمية أسهل',
       description: 'شريككم الاستراتيجي في خدمات الاستيراد والتصدير. نجمع بين الخبرة الطويلة والاحترافية العالية لضمان وصول تجارتكم إلى آفاق جديدة بفاعلية وأمان.',
@@ -30,8 +30,8 @@ export const translations = {
         'تغطية واسعة تشمل أهم الموانئ العالمية.'
       ],
       imageBadge: {
-        value: '100%',
-        label: 'ثقة ومصداقية'
+        value: '', // تم إزالتها (مصداقية 100%)
+        label: ''
       }
     },
     services: {
@@ -115,7 +115,7 @@ export const translations = {
       contact: 'Contact'
     },
     hero: {
-      badge: 'Excellence in Global Trade',
+      badge: '',
       title: 'MK Trade Hub',
       tagline: 'Innovative Solutions for Easier Global Trade',
       description: 'Your strategic partner in import and export services. We combine long-standing experience with high professionalism to ensure your trade reaches new heights.',
@@ -134,8 +134,8 @@ export const translations = {
         'Wide coverage across major global ports.'
       ],
       imageBadge: {
-        value: '100%',
-        label: 'Trust & Credibility'
+        value: '',
+        label: ''
       }
     },
     services: {

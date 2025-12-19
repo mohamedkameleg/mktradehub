@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Hero: React.FC = () => {
@@ -31,21 +31,23 @@ const Hero: React.FC = () => {
 
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden" dir={dir}>
-      {/* Background with subtle overlay */}
+      {/* Background with subtle overlay - Changed from giant ship to abstract logistics/office */}
       <div className="absolute inset-0">
         <img 
-          src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070" 
-          alt="Logistics background" 
+          src="https://images.unsplash.com/photo-1454165833767-027ffeb99c3e?q=80&w=2070" 
+          alt="Modern Business Logistics" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/90 via-navy-dark/70 to-navy-dark/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/95 via-navy-dark/80 to-navy-dark/95" />
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center animate-fade-in-up">
-        {/* Badge */}
-        <span className="inline-block py-2 px-6 rounded-full bg-gold/10 text-gold border border-gold/20 text-[10px] md:text-xs font-bold tracking-[0.4em] mb-10 uppercase backdrop-blur-sm">
-          {t.hero.badge}
-        </span>
+        {/* Badge - Removed as requested */}
+        {t.hero.badge && (
+          <span className="inline-block py-2 px-6 rounded-full bg-gold/10 text-gold border border-gold/20 text-[10px] md:text-xs font-bold tracking-[0.4em] mb-10 uppercase backdrop-blur-sm">
+            {t.hero.badge}
+          </span>
+        )}
         
         {/* Main Heading - Centered and calm */}
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight mb-8 tracking-tight">
