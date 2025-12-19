@@ -8,7 +8,6 @@ const QuotePage: React.FC = () => {
 
   return (
     <div className="pt-0 min-h-screen bg-slate-50" dir={dir}>
-      {/* Page Header */}
       <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img 
@@ -16,7 +15,7 @@ const QuotePage: React.FC = () => {
             alt="Shipping Calculator Header" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-primary-dark/80 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-navy-dark/80 mix-blend-multiply" />
         </div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
@@ -30,7 +29,6 @@ const QuotePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative -mt-20 z-20">
         <FreightCalculator />
         
@@ -40,7 +38,6 @@ const QuotePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Contact Section at bottom */}
       <Contact />
     </div>
   );

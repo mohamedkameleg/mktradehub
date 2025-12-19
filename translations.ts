@@ -54,6 +54,25 @@ export const translations = {
         { id: 3, label: 'وجهة دولية', value: '30', suffix: '+' },
       ]
     },
+    quote: {
+      title: 'حاسبة تكاليف الشحن',
+      subtitle: 'احصل على تقدير فوري لتكلفة شحنتك القادمة',
+      origin: 'نقطة الانطلاق (ميناء التحميل)',
+      destination: 'وجهة الوصول (ميناء التفريغ)',
+      containerType: 'نوع الحاوية',
+      containerOptions: {
+        bg20: 'حاوية 20 قدم عادية',
+        bg40: 'حاوية 40 قدم عادية',
+        hq40: 'حاوية 40 قدم High Cube',
+        lcl: 'شحن جزئي (LCL)'
+      },
+      calculateBtn: 'احسب التكلفة التقديرية',
+      calculating: 'جاري التحليل...',
+      resultTitle: 'التكلفة التقديرية المتوقعة',
+      currency: 'دولار أمريكي',
+      note: 'هذا السعر تقديري وقد يختلف بناءً على أسعار السوق الحالية ونوع البضاعة.',
+      contactUs: 'اطلب تسعيرة نهائية الآن'
+    },
     contact: {
       title: 'اتصل بنا',
       heading: 'يسعدنا دائماً تواصلكم معنا',
@@ -98,7 +117,7 @@ export const translations = {
       serviceLinks: ['شحن بحري وجوي', 'تخليص جمركي', 'تخزين ولوجستيات', 'استشارات'],
       contact: 'بيانات التواصل',
       copyright: 'جميع الحقوق محفوظة.',
-      privacy: 'سياسة الخصوصية',
+      privacy: 'سياسة الخصولية',
       terms: 'الشروط والأحكام'
     },
     whatsapp: {
@@ -157,6 +176,25 @@ export const translations = {
         { id: 2, label: 'Valued Clients', value: '500', suffix: '+' },
         { id: 3, label: 'International Destinations', value: '30', suffix: '+' },
       ]
+    },
+    quote: {
+      title: 'Freight Calculator',
+      subtitle: 'Get an instant estimate for your next shipment',
+      origin: 'Origin (Port of Loading)',
+      destination: 'Destination (Port of Discharge)',
+      containerType: 'Container Type',
+      containerOptions: {
+        bg20: '20ft Standard Container',
+        bg40: '40ft Standard Container',
+        hq40: '40ft High Cube Container',
+        lcl: 'Less than Container Load (LCL)'
+      },
+      calculateBtn: 'Calculate Estimated Cost',
+      calculating: 'Analyzing...',
+      resultTitle: 'Estimated Shipping Cost',
+      currency: 'USD',
+      note: 'This is an estimated price and may vary based on market rates and cargo type.',
+      contactUs: 'Request Final Quote'
     },
     contact: {
       title: 'Contact Us',

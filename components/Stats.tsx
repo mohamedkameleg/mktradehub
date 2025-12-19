@@ -6,7 +6,7 @@ const Stats: React.FC = () => {
   const isRtl = language === 'ar';
 
   return (
-    <section id="stats" className="py-16 bg-primary text-white relative" dir={dir}>
+    <section id="stats" className="py-16 bg-navy text-white relative" dir={dir}>
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className={`grid grid-cols-2 md:grid-cols-3 gap-8 text-center ${isRtl ? 'divide-x divide-x-reverse' : 'divide-x'} divide-white/20 md:divide-x-0`}>
