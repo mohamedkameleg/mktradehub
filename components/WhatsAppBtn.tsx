@@ -1,12 +1,11 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
-import { useLanguage } from '../contexts/LanguageContext';
+import { useLanguage } from '../contexts/LanguageContext.tsx';
 
 const WhatsAppBtn: React.FC = () => {
   const { t, language } = useLanguage();
   const isRtl = language === 'ar';
   
-  // Replace with your actual WhatsApp number
   const phoneNumber = "201000450590"; 
   const message = isRtl ? "مرحباً، لدي استفسار بخصوص خدماتكم." : "Hello, I have an inquiry about your services.";
   

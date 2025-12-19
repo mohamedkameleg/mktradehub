@@ -1,13 +1,13 @@
 import React from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Services';
-import Stats from './components/Stats';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import WhatsAppBtn from './components/WhatsAppBtn';
-import { LanguageProvider } from './contexts/LanguageContext';
+import Navbar from './components/Navbar.tsx';
+import Hero from './components/Hero.tsx';
+import About from './components/About.tsx';
+import Services from './components/Services.tsx';
+import Stats from './components/Stats.tsx';
+import Contact from './components/Contact.tsx';
+import Footer from './components/Footer.tsx';
+import WhatsAppBtn from './components/WhatsAppBtn.tsx';
+import { LanguageProvider } from './contexts/LanguageContext.tsx';
 
 const App: React.FC = () => {
   const handleNavigate = (sectionId: string) => {
