@@ -7,23 +7,11 @@ const Hero: React.FC = () => {
   const isRtl = language === 'ar';
   const ArrowIcon = isRtl ? ArrowLeft : ArrowRight;
 
-  const scrollToContact = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
       window.scrollTo({
-        top: contactSection.offsetTop - 80,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const scrollToServices = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const servicesSection = document.getElementById('services');
-    if (servicesSection) {
-      window.scrollTo({
-        top: servicesSection.offsetTop - 80,
+        top: section.offsetTop - 80,
         behavior: 'smooth'
       });
     }
@@ -31,24 +19,17 @@ const Hero: React.FC = () => {
 
   return (
     <div className="relative h-screen flex items-center justify-center overflow-hidden" dir={dir}>
-      {/* Background with subtle overlay - Changed from giant ship to abstract logistics/office */}
+      {/* Background with subtle overlay */}
       <div className="absolute inset-0">
         <img 
-          src="https://images.unsplash.com/photo-1454165833767-027ffeb99c3e?q=80&w=2070" 
-          alt="Modern Business Logistics" 
+          src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2070" 
+          alt="Modern Professional Office" 
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/95 via-navy-dark/80 to-navy-dark/95" />
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center animate-fade-in-up">
-        {/* Badge - Removed as requested */}
-        {t.hero.badge && (
-          <span className="inline-block py-2 px-6 rounded-full bg-gold/10 text-gold border border-gold/20 text-[10px] md:text-xs font-bold tracking-[0.4em] mb-10 uppercase backdrop-blur-sm">
-            {t.hero.badge}
-          </span>
-        )}
-        
         {/* Main Heading - Centered and calm */}
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight mb-8 tracking-tight">
           {t.hero.title} <br />
@@ -63,14 +44,14 @@ const Hero: React.FC = () => {
         {/* Buttons - Centered */}
         <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
           <button 
-            onClick={scrollToContact}
+            onClick={() => scrollToSection('contact')}
             className="w-full sm:w-auto bg-gold text-navy px-14 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-gold/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3"
           >
             {t.hero.contactBtn}
             <ArrowIcon size={20} />
           </button>
           <button 
-            onClick={scrollToServices}
+            onClick={() => scrollToSection('services')}
             className="w-full sm:w-auto border border-white/20 text-white px-14 py-5 rounded-2xl font-medium text-lg hover:bg-white/5 transition-all backdrop-blur-sm"
           >
             {t.hero.servicesBtn}

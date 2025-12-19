@@ -31,7 +31,7 @@ const Contact: React.FC = () => {
           
           {/* Contact Info Cards */}
           <div className="lg:col-span-1 space-y-5">
-            {/* Egypt Branch - Now Navy to match UAE */}
+            {/* Egypt Branch - Changed to Navy */}
             <div className="bg-navy text-white p-8 rounded-3xl border border-navy shadow-lg transition-transform hover:-translate-y-1">
               <div className="flex items-center gap-4 mb-4">
                 <div className="bg-white/10 p-3 rounded-2xl text-gold">
