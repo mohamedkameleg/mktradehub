@@ -117,7 +117,7 @@ export const translations = {
       serviceLinks: ['شحن بحري وجوي', 'تخليص جمركي', 'تخزين ولوجستيات', 'استشارات'],
       contact: 'بيانات التواصل',
       copyright: 'جميع الحقوق محفوظة.',
-      privacy: 'سياسة الخصولية',
+      privacy: 'سياسة الخصوصية',
       terms: 'الشروط والأحكام'
     },
     whatsapp: {
