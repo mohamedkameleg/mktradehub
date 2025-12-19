@@ -31,15 +31,15 @@ const Contact: React.FC = () => {
           
           {/* Contact Info Cards */}
           <div className="lg:col-span-1 space-y-5">
-            {/* Egypt Branch */}
-            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm transition-transform hover:-translate-y-1">
+            {/* Egypt Branch - Now Navy to match UAE */}
+            <div className="bg-navy text-white p-8 rounded-3xl border border-navy shadow-lg transition-transform hover:-translate-y-1">
               <div className="flex items-center gap-4 mb-4">
-                <div className="bg-navy/5 p-3 rounded-2xl text-navy">
+                <div className="bg-white/10 p-3 rounded-2xl text-gold">
                   <MapPin size={24} />
                 </div>
-                <h4 className="font-black text-navy text-xl">{t.contact.info.address.label}</h4>
+                <h4 className="font-black text-white text-xl">{t.contact.info.address.label}</h4>
               </div>
-              <p className="text-slate-600 leading-relaxed font-medium mb-4">{t.contact.info.address.value}</p>
+              <p className="text-slate-300 leading-relaxed font-light mb-4">{t.contact.info.address.value}</p>
               <div className="flex items-center gap-2 text-gold font-bold" dir="ltr">
                 <Phone size={16} />
                 <span>{t.contact.info.phone.value}</span>

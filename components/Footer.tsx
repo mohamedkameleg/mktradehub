@@ -115,18 +115,28 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contact Summary - Updated to show both phones clearly */}
+          {/* Contact Summary */}
           <div>
             <h4 className="text-white font-bold text-lg mb-6">{t.footer.contact}</h4>
             <ul className="space-y-4 text-sm">
-              <li className="flex flex-col gap-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-gold font-bold">{t.contact.info.phone.label}:</span>
-                  <span dir="ltr">{t.contact.info.phone.value}</span>
+              <li className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-gold">
+                    <Phone size={14} />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] uppercase tracking-tighter text-slate-500">{t.contact.info.phone.label}</span>
+                    <span dir="ltr" className="font-bold text-white">{t.contact.info.phone.value}</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-gold font-bold">{t.contact.info.phoneUAE.label}:</span>
-                  <span dir="ltr">{t.contact.info.phoneUAE.value}</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-gold">
+                    <Phone size={14} />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] uppercase tracking-tighter text-slate-500">{t.contact.info.phoneUAE.label}</span>
+                    <span dir="ltr" className="font-bold text-white">{t.contact.info.phoneUAE.value}</span>
+                  </div>
                 </div>
               </li>
               <li className="flex items-start gap-3 border-t border-slate-800 pt-3">
