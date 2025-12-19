@@ -8,7 +8,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Babel for browser-side transpilation of TSX -->
+    <!-- Babel for browser-side transpilation -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,6 +40,12 @@
         to { opacity: 1; transform: translateY(0); }
       }
       #root { min-height: 100vh; }
+      
+      /* نمط شبكي خلفي بديل للصور */
+      .bg-grid-pattern {
+        background-image: radial-gradient(circle, rgba(198, 166, 100, 0.1) 1px, transparent 1px);
+        background-size: 30px 30px;
+      }
     </style>
 
     <script type="importmap">
@@ -58,13 +64,45 @@
 <body class="bg-slate-50 text-slate-800">
     <div id="root"></div>
     
-    <!-- استخدام Babel لتحميل ملف index.tsx مع تحديد الـ Presets المطلوبة -->
-    <!-- هذا يتجاوز مشكلة Strict MIME type checking -->
-    <script 
-      type="text/babel" 
-      data-type="module" 
-      data-presets="typescript,react" 
-      src="./index.tsx">
+    <!-- محمل ذكي لتحويل ملفات الـ TSX يدوياً لتجنب مشاكل الـ MIME type على GitHub -->
+    <script type="text/babel" data-presets="typescript,react">
+      import React from 'react';
+      import { createRoot } from 'react-dom/client';
+      
+      // وظيفة لتحميل الملف كـ نص وتجاوز قيود المتصفح الصارمة للملفات المجهولة
+      async function loadComponent(url) {
+        const response = await fetch(url);
+        const code = await response.text();
+        const transformed = Babel.transform(code, {
+          presets: ['typescript', 'react'],
+          filename: url
+        }).code;
+        
+        // تحويل الكود إلى Blob ليتمكن النظام من عمل import له
+        const blob = new Blob([transformed], { type: 'application/javascript' });
+        return import(URL.createObjectURL(blob));
+      }
+
+      async function init() {
+        try {
+          const { default: App } = await loadComponent('./App.tsx');
+          const container = document.getElementById('root');
+          if (container) {
+            const root = createRoot(container);
+            root.render(<App />);
+          }
+        } catch (err) {
+          console.error("خطأ في تحميل التطبيق:", err);
+          document.getElementById('root').innerHTML = `
+            <div style="padding: 20px; text-align: center; color: #002B5B; font-family: sans-serif;">
+              <h2>عذراً، حدث خطأ أثناء تشغيل الموقع.</h2>
+              <p>يرجى التأكد من رفع كافة الملفات بشكل صحيح.</p>
+            </div>
+          `;
+        }
+      }
+
+      init();
     </script>
 </body>
 </html>

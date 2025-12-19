@@ -1,6 +1,6 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { useLanguage } from '../contexts/LanguageContext';
+import { ArrowLeft, ArrowRight, ShieldCheck, Globe } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext.tsx';
 
 const Hero: React.FC = () => {
   const { t, language, dir } = useLanguage();
@@ -18,50 +18,60 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <div className="relative h-screen flex items-center justify-center overflow-hidden" dir={dir}>
-      {/* Background with subtle overlay */}
-      <div className="absolute inset-0">
-        <img 
-          src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2070" 
-          alt="Modern Professional Office" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/95 via-navy-dark/80 to-navy-dark/95" />
-      </div>
+    <div className="relative h-screen flex items-center justify-center overflow-hidden bg-navy-dark" dir={dir}>
+      {/* خلفية بتدرج لوني ونمط شبكي بدلاً من الصور */}
+      <div className="absolute inset-0 bg-gradient-to-br from-navy-dark via-navy to-navy-dark"></div>
+      <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
+      
+      {/* دوائر ضوئية خافتة للجمالية */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[120px]"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-navy-light/20 rounded-full blur-[120px]"></div>
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center animate-fade-in-up">
-        {/* Main Heading - Centered and calm */}
+        {/* شعار صغير علوي */}
+        <div className="flex justify-center mb-8">
+           <div className="bg-gold/10 px-4 py-2 rounded-full border border-gold/20 backdrop-blur-sm flex items-center gap-2">
+             <ShieldCheck size={16} className="text-gold" />
+             <span className="text-gold text-xs font-bold tracking-widest uppercase">Trusted Partner since 2016</span>
+           </div>
+        </div>
+
+        {/* العنوان الرئيسي */}
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight mb-8 tracking-tight">
           {t.hero.title} <br />
-          <span className="text-gold font-light block mt-4 text-4xl md:text-6xl">{t.hero.tagline}</span>
+          <span className="text-gold font-light block mt-4 text-3xl md:text-5xl lg:text-6xl italic">
+            {t.hero.tagline}
+          </span>
         </h1>
         
-        {/* Description - Calmer font weight */}
-        <p className="text-lg md:text-xl text-slate-200 mb-14 leading-relaxed font-light max-w-2xl mx-auto opacity-80">
+        {/* الوصف */}
+        <p className="text-lg md:text-xl text-slate-300 mb-14 leading-relaxed font-light max-w-3xl mx-auto opacity-90">
           {t.hero.description}
         </p>
         
-        {/* Buttons - Centered */}
+        {/* الأزرار */}
         <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
           <button 
             onClick={() => scrollToSection('contact')}
-            className="w-full sm:w-auto bg-gold text-navy px-14 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-gold/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3"
+            className="w-full sm:w-auto bg-gold text-navy px-14 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-white hover:text-navy transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3"
           >
             {t.hero.contactBtn}
             <ArrowIcon size={20} />
           </button>
           <button 
             onClick={() => scrollToSection('services')}
-            className="w-full sm:w-auto border border-white/20 text-white px-14 py-5 rounded-2xl font-medium text-lg hover:bg-white/5 transition-all backdrop-blur-sm"
+            className="w-full sm:w-auto border-2 border-white/20 text-white px-14 py-5 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all backdrop-blur-md flex items-center justify-center gap-2"
           >
+            <Globe size={18} />
             {t.hero.servicesBtn}
           </button>
         </div>
       </div>
 
-      {/* Subtle Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:block opacity-30">
-        <div className="w-[1px] h-16 bg-gradient-to-b from-gold to-transparent mx-auto"></div>
+      {/* مؤشر تمرير سفلي */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+        <span className="text-white text-[10px] uppercase tracking-[0.5em]">{isRtl ? 'انزل للأسفل' : 'Scroll Down'}</span>
+        <div className="w-[2px] h-12 bg-gradient-to-b from-gold to-transparent"></div>
       </div>
     </div>
   );
