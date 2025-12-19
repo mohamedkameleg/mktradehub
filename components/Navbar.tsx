@@ -1,27 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Container, Globe } from 'lucide-react';
+import { Menu, X, Container, Languages } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { PageType } from '../types';
 
 interface NavbarProps {
-  currentPage: PageType;
-  onNavigate: (page: PageType, sectionId?: string) => void;
+  onNavigate: (sectionId: string) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
+const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const { t, language, setLanguage, dir } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
-      // Logic: If on home page, transparent until scroll.
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 40);
+
+      const sections = ['home', 'stats', 'about', 'services', 'contact'];
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 120 && rect.bottom >= 120) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [currentPage]);
+  }, []);
 
   const toggleLanguage = () => {
     setLanguage(language === 'ar' ? 'en' : 'ar');
@@ -30,115 +39,91 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   const handleNavClick = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
     setIsOpen(false);
-    onNavigate(id as PageType);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    onNavigate(id);
   };
 
   const navLinks = [
     { id: 'home', name: t.nav.home },
+    { id: 'stats', name: t.nav.stats },
     { id: 'about', name: t.nav.about },
     { id: 'services', name: t.nav.services },
-    { id: 'stats', name: t.nav.stats },
     { id: 'contact', name: t.nav.contact },
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-slate-50/95 shadow-lg py-2 backdrop-blur-md' : 'bg-primary/90 md:bg-transparent py-4'}`} dir={dir}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white shadow-lg py-3' : 'bg-transparent py-6'}`} dir={dir}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center">
           <div 
-            className="flex-shrink-0 flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-3 cursor-pointer group"
             onClick={() => onNavigate('home')}
           >
-            <Container className={`h-8 w-8 ${isScrolled ? 'text-primary' : 'text-white'}`} />
-            <span className={`font-bold text-2xl ${isScrolled ? 'text-primary' : 'text-white'}`}>
-              MK <span className={isScrolled ? 'text-secondary' : 'text-white'}>TradeHub</span>
+            <Container className={`h-8 w-8 transition-colors ${isScrolled ? 'text-navy' : 'text-gold'}`} />
+            <span className={`font-black text-2xl tracking-tighter transition-colors ${isScrolled ? 'text-navy' : 'text-white'}`}>
+              MK <span className="text-gold">Trade Hub</span>
             </span>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8 space-x-reverse rtl:space-x-reverse ltr:space-x-normal gap-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                onClick={(e) => handleNavClick(e, link.id)}
-                className={`font-semibold transition-colors duration-200 ${
-                  isScrolled 
-                    ? 'text-slate-700 hover:text-primary' 
-                    : 'text-white/90 hover:text-white'
-                } ${currentPage === link.id && isScrolled ? 'text-primary' : ''} ${currentPage === link.id && !isScrolled ? 'text-white underline underline-offset-8' : ''}`}
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
+          <div className="hidden md:flex items-center gap-10">
+            <div className="flex gap-6">
+              {navLinks.map((link) => (
+                <a
+                  key={link.id}
+                  href={`#${link.id}`}
+                  onClick={(e) => handleNavClick(e, link.id)}
+                  className={`text-sm font-bold uppercase tracking-widest transition-all relative py-2 ${
+                    isScrolled ? 'text-slate-800 hover:text-navy' : 'text-white/90 hover:text-white'
+                  }`}
+                >
+                  {link.name}
+                  {activeSection === link.id && (
+                    <span className="absolute bottom-0 left-0 w-full h-1 bg-gold rounded-full animate-fade-in-up"></span>
+                  )}
+                </a>
+              ))}
+            </div>
 
-          <div className="hidden md:flex items-center gap-4">
-            {/* Language Switcher */}
             <button 
               onClick={toggleLanguage}
-              className={`flex items-center gap-1 font-semibold ${isScrolled ? 'text-slate-700 hover:text-primary' : 'text-white hover:text-white/80'}`}
-            >
-              <Globe className="h-5 w-5" />
-              <span>{language === 'ar' ? 'English' : 'عربي'}</span>
-            </button>
-
-            {/* CTA Button Desktop */}
-            <a 
-              href="#contact"
-              onClick={(e) => handleNavClick(e, 'contact')}
-              className={`px-5 py-2 rounded-full font-bold transition-all ${
-                isScrolled
-                  ? 'bg-primary text-white hover:bg-primary-dark'
-                  : 'bg-white text-primary hover:bg-slate-100'
+              className={`flex items-center gap-2 px-6 py-2 rounded-full font-black text-xs transition-all shadow-md ${
+                isScrolled ? 'bg-navy text-white' : 'bg-gold text-navy'
               }`}
             >
-              {t.nav.requestQuote}
-            </a>
+              <Languages size={14} />
+              <span>{language === 'ar' ? 'English' : 'عربي'}</span>
+            </button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-4">
-             <button 
-              onClick={toggleLanguage}
-              className={`${isScrolled ? 'text-slate-800' : 'text-white'} hover:text-primary font-bold`}
-            >
-              {language === 'ar' ? 'EN' : 'AR'}
-            </button>
-
+          <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`${isScrolled ? 'text-slate-800' : 'text-white'} hover:text-primary focus:outline-none`}
+              className={`${isScrolled ? 'text-navy' : 'text-white'}`}
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div className="md:hidden bg-slate-50 shadow-xl absolute w-full top-full right-0 border-t border-slate-200">
-          <div className="px-4 pt-2 pb-6 space-y-2">
+        <div className="md:hidden bg-white shadow-2xl absolute w-full top-full left-0 border-t border-slate-100 animate-fade-in-up">
+          <div className="px-6 py-8 flex flex-col gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.id}
                 href={`#${link.id}`}
                 onClick={(e) => handleNavClick(e, link.id)}
-                className="block px-3 py-3 text-base font-medium text-slate-700 hover:text-primary hover:bg-slate-100 rounded-md"
+                className={`text-lg font-black text-navy border-b border-slate-50 pb-2 ${language === 'ar' ? 'text-right' : 'text-left'}`}
               >
                 {link.name}
               </a>
             ))}
-             <a 
-              href="#contact"
-              onClick={(e) => handleNavClick(e, 'contact')}
-              className="block w-full text-center mt-4 px-5 py-3 rounded-md font-bold bg-primary text-white hover:bg-primary-dark"
+            <button 
+              onClick={() => { toggleLanguage(); setIsOpen(false); }}
+              className="bg-gold text-navy py-4 rounded-xl font-black text-center"
             >
-              {t.nav.requestQuote}
-            </a>
+              {language === 'ar' ? 'English' : 'عربي'}
+            </button>
           </div>
         </div>
       )}

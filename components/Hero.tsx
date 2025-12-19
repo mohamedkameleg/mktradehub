@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Hero: React.FC = () => {
@@ -7,51 +7,78 @@ const Hero: React.FC = () => {
   const isRtl = language === 'ar';
   const ArrowIcon = isRtl ? ArrowLeft : ArrowRight;
 
+  const scrollToContact = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      window.scrollTo({
+        top: contactSection.offsetTop - 80,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const scrollToServices = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const servicesSection = document.getElementById('services');
+    if (servicesSection) {
+      window.scrollTo({
+        top: servicesSection.offsetTop - 80,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
-    <div id="home" className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden" dir={dir}>
-      {/* Background Image with Overlay */}
+    <div className="relative h-screen flex items-center justify-center overflow-hidden" dir={dir}>
+      {/* Background with subtle overlay */}
       <div className="absolute inset-0">
         <img 
-          src="https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?q=80&w=2070&auto=format&fit=crop" 
-          alt="Container Ship Blue" 
-          className="w-full h-full object-cover object-center"
+          src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070" 
+          alt="Logistics background" 
+          className="w-full h-full object-cover"
         />
-        {/* Gradient Overlay for Text Readability - Blue Theme */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/95 to-primary/60 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-dark/90 via-navy-dark/70 to-navy-dark/90" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-right rtl:sm:text-right ltr:sm:text-left">
-        <div className={`space-y-6 max-w-3xl ${isRtl ? 'ms-auto' : 'me-auto'}`}>
-          <span className="inline-block py-1 px-3 rounded-full bg-white/20 text-white border border-white/30 text-sm font-bold tracking-wide mb-2 animate-fade-in-up">
-            {t.hero.badge}
-          </span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
-            {t.hero.title} <br />
-            <span className="text-slate-100">
-              {t.hero.tagline}
-            </span>
-          </h1>
-          <p className={`mt-4 text-xl text-slate-100 max-w-2xl leading-relaxed font-light ${isRtl ? 'ms-auto' : 'me-auto'}`}>
-            {t.hero.description}
-          </p>
-          
-          <div className={`mt-8 flex flex-col sm:flex-row gap-4 ${isRtl ? 'justify-end' : 'justify-start'}`}>
-            <a 
-              href="#contact"
-              className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-lg text-primary bg-white hover:bg-slate-100 transition-transform transform hover:-translate-y-1 shadow-lg"
-            >
-              {t.hero.contactBtn}
-              <ArrowIcon className={`h-5 w-5 ${isRtl ? 'ms-2' : 'ml-2'}`} />
-            </a>
-            <a 
-              href="#services"
-              className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/40 text-lg font-bold rounded-lg text-white hover:bg-white/10 transition-colors backdrop-blur-sm"
-            >
-              {t.hero.servicesBtn}
-            </a>
-          </div>
+      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center animate-fade-in-up">
+        {/* Badge */}
+        <span className="inline-block py-2 px-6 rounded-full bg-gold/10 text-gold border border-gold/20 text-[10px] md:text-xs font-bold tracking-[0.4em] mb-10 uppercase backdrop-blur-sm">
+          {t.hero.badge}
+        </span>
+        
+        {/* Main Heading - Centered and calm */}
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight mb-8 tracking-tight">
+          {t.hero.title} <br />
+          <span className="text-gold font-light block mt-4 text-4xl md:text-6xl">{t.hero.tagline}</span>
+        </h1>
+        
+        {/* Description - Calmer font weight */}
+        <p className="text-lg md:text-xl text-slate-200 mb-14 leading-relaxed font-light max-w-2xl mx-auto opacity-80">
+          {t.hero.description}
+        </p>
+        
+        {/* Buttons - Centered */}
+        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
+          <button 
+            onClick={scrollToContact}
+            className="w-full sm:w-auto bg-gold text-navy px-14 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-gold/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3"
+          >
+            {t.hero.contactBtn}
+            <ArrowIcon size={20} />
+          </button>
+          <button 
+            onClick={scrollToServices}
+            className="w-full sm:w-auto border border-white/20 text-white px-14 py-5 rounded-2xl font-medium text-lg hover:bg-white/5 transition-all backdrop-blur-sm"
+          >
+            {t.hero.servicesBtn}
+          </button>
         </div>
+      </div>
+
+      {/* Subtle Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:block opacity-30">
+        <div className="w-[1px] h-16 bg-gradient-to-b from-gold to-transparent mx-auto"></div>
       </div>
     </div>
   );

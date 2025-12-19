@@ -1,44 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from './components/Navbar';
-import Home from './components/Home';
-import AboutPage from './components/AboutPage';
-import ServicesPage from './components/ServicesPage';
-import StatsPage from './components/StatsPage';
-import ContactPage from './components/ContactPage';
+import Hero from './components/Hero';
+import About from './components/About';
+import Services from './components/Services';
+import Stats from './components/Stats';
+import Contact from './components/Contact';
 import Footer from './components/Footer';
 import WhatsAppBtn from './components/WhatsAppBtn';
 import { LanguageProvider } from './contexts/LanguageContext';
-import { PageType } from './types';
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<PageType>('home');
+  const handleNavigate = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80; 
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-  const handleNavigate = (page: PageType, sectionId?: string) => {
-    setCurrentPage(page);
-    
-    // For manual section navigation if needed later, but now we use pages
-    if (sectionId) {
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
   return (
     <LanguageProvider>
-      <div className="font-cairo antialiased bg-slate-100 min-h-screen relative">
-        <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
+      <div className="font-cairo antialiased bg-slate-50 min-h-screen relative overflow-x-hidden">
+        <Navbar onNavigate={handleNavigate} />
         <main>
-          {currentPage === 'home' && <Home />}
-          {currentPage === 'about' && <AboutPage />}
-          {currentPage === 'services' && <ServicesPage />}
-          {currentPage === 'stats' && <StatsPage />}
-          {currentPage === 'contact' && <ContactPage />}
+          <section id="home">
+            <Hero />
+          </section>
+          
+          <section id="stats">
+            <Stats />
+          </section>
+          
+          <section id="about">
+            <About />
+          </section>
+          
+          <section id="services">
+            <Services />
+          </section>
+          
+          <section id="contact">
+            <Contact />
+          </section>
         </main>
         <Footer />
         <WhatsAppBtn />

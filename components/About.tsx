@@ -7,55 +7,46 @@ const About: React.FC = () => {
   const isRtl = language === 'ar';
 
   return (
-    <section id="about" className="py-20 bg-slate-50" dir={dir}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+    <section id="about" className="py-24 bg-white" dir={dir}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-24 items-center">
           
           {/* Text Content */}
-          <div className="mb-12 lg:mb-0">
-            <h2 className="text-secondary font-bold text-lg mb-2 uppercase tracking-wider">{t.about.title}</h2>
-            <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
+          <div className="mb-16 lg:mb-0">
+            <span className="text-gold font-bold uppercase tracking-[0.3em] text-xs mb-4 inline-block">{t.about.title}</span>
+            <h3 className="text-4xl md:text-5xl font-black text-navy mb-10 leading-tight">
               {t.about.heading}
             </h3>
-            <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+            <p className="text-lg text-slate-600 mb-8 leading-relaxed font-medium">
               {t.about.description1}
             </p>
-            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+            <p className="text-slate-500 mb-12 leading-relaxed font-light text-lg">
               {t.about.description2}
             </p>
 
-            <ul className="space-y-4">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {t.about.points.map((item, index) => (
-                <li key={index} className="flex items-start">
-                  <CheckCircle2 className={`h-6 w-6 text-secondary flex-shrink-0 mt-1 ${isRtl ? 'ml-3' : 'mr-3'}`} />
-                  <span className="text-slate-700 font-medium text-lg">{item}</span>
+                <li key={index} className="flex items-start gap-3 p-2">
+                  <CheckCircle2 className="h-5 w-5 text-gold flex-shrink-0 mt-1" />
+                  <span className="text-slate-700 font-bold text-sm leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Image Grid */}
+          {/* Image Container */}
           <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-200">
+            <div className="rounded-[3.5rem] overflow-hidden shadow-2xl border border-slate-100 transform rotate-1 hover:rotate-0 transition-transform duration-1000">
               <img 
-                src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop" 
-                alt="Logistics warehouse" 
-                className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070" 
+                alt="Logistics team" 
+                className="w-full aspect-square object-cover"
               />
-              <div className={`absolute bottom-0 bg-primary/90 text-white p-6 backdrop-blur-md ${isRtl ? 'right-0 rounded-tl-3xl' : 'left-0 rounded-tr-3xl'}`}>
-                <p className="text-3xl font-bold mb-1">{t.about.imageBadge.value}</p>
-                <p className="text-sm font-medium text-slate-200">{t.about.imageBadge.label}</p>
-              </div>
             </div>
             
-            {/* Decorative Dot Pattern */}
-            <div className={`absolute -z-10 -bottom-6 w-24 h-24 text-secondary/20 ${isRtl ? '-left-6' : '-right-6'}`}>
-              <svg fill="currentColor" viewBox="0 0 24 24">
-                <pattern id="dots" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
-                  <circle cx="2" cy="2" r="1" />
-                </pattern>
-                <rect width="100%" height="100%" fill="url(#dots)" />
-              </svg>
+            <div className={`absolute -bottom-10 ${isRtl ? '-left-10' : '-right-10'} bg-white p-10 text-navy rounded-[3rem] shadow-2xl border border-slate-50 z-10 flex flex-col items-center min-w-[180px]`}>
+              <p className="text-5xl font-black mb-1 text-gold">{t.about.imageBadge.value}</p>
+              <p className="text-[10px] font-black tracking-widest text-slate-400 uppercase text-center">{t.about.imageBadge.label}</p>
             </div>
           </div>
 
